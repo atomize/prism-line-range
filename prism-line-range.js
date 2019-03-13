@@ -1,6 +1,5 @@
 (function () {
-    if (typeof self === 'undefined' || !self.Prism || !self.document || !document.querySelector || !window.fetch) {
-
+    if (typeof self === 'undefined' || !self.Prism || !self.document || !document.querySelector) {
         return;
     }
     if (!window.fetch) {
@@ -15,7 +14,6 @@
         });
         return response
     }
-
     function init(sourceURL) {
         return fetchText(sourceURL).then(
             x => {
@@ -23,52 +21,37 @@
             }
         )
     }
-function makething(pre,s) {
-    var lineRange = pre.getAttribute("data-range")
-    var lines = lineRange.split(',')
-    lines = lines.filter(x => isNaN(x) === false)
-    var startLine = parseInt(lines[0], 10)
-    var endLine = lines[1] === undefined ? -1 : parseInt(lines[1], 10)
-    var codeRange = s[1].slice(startLine - 1, endLine).join('\n')
-    var codeRangeEl = `<code class="line-numbers lang-js">${codeRange.trim()}</code>`
-    pre.setAttribute('data-start', (parseInt(lines[0], 10)))
-    pre.innerHTML = codeRangeEl
-    Prism.highlightAllUnder(pre)
-}
-    function lineRange() {
-
-        let allEls = Array.prototype.slice.apply(document.querySelectorAll("pre[data-tutorial]"))
-        let allEls1 = allEls.map(datatt => datatt.getAttribute('data-tutorial'))
-        var filteredEls = allEls1.filter((el, pos) => {return allEls1.indexOf(el) == pos})
-        filteredEls.map(source => init(source).then(s => {
-            var subSelectors = Array.prototype.slice.apply(document.querySelectorAll('[data-tutorial*="' + s[0] + '"]'))
-            console.log(allEls.map(datatt => { 
-                datatt.getAttribute('data-tutorial')===s[0]?makething(datatt,s):null
-            }))
-            /* subSelectors.map(function (pre) {
-                var lineRange = pre.getAttribute("data-range")
-                var lines = lineRange.split(',')
-                lines = lines.filter(x => isNaN(x) === false)
-                var startLine = parseInt(lines[0], 10)
-                var endLine = lines[1] === undefined ? -1 : parseInt(lines[1], 10)
-                var codeRange = s[1].slice(startLine - 1, endLine).join('\n')
-                var codeRangeEl = `<code class="line-numbers lang-js">${codeRange.trim()}</code>`
-                pre.setAttribute('data-start', (parseInt(lines[0], 10)))
-                pre.innerHTML = codeRangeEl
-                Prism.highlightAllUnder(pre)
-            }) */
-        }))
-        
+    function splitLines(pre, s) {
+        var lineRange = pre.getAttribute("data-range")
+        var rawLines = lineRange.split(',')
+        var lines = rawLines.filter(x => isNaN(x) === false)
+        var startLine = parseInt(lines[0], 10)
+        var endLine = lines[1] === undefined ? -1 : parseInt(lines[1], 10)
+        var codeRange = s[1].slice(startLine - 1, endLine).join('\n')
+        var codeRangeEl = '<code class="line-numbers lang-js">'+codeRange.trim()+'</code>'
+        pre.setAttribute('data-start', startLine)
+        pre.innerHTML = codeRangeEl
+        Prism.highlightAllUnder(pre)
     }
-
+    function lineRange() {
+        let tutorialElements = Array.prototype.slice.apply(document.querySelectorAll("pre[data-tutorial]"))
+        let fileArray = tutorialElements.map(el => el.getAttribute('data-tutorial'))
+        var filteredFileArray = fileArray.filter((el, pos) => {
+            return fileArray.indexOf(el) == pos
+        })
+        filteredFileArray.map(source => init(source).then(s => {
+            tutorialElements.map(el => {
+                el.getAttribute('data-tutorial') === s[0] ? splitLines(el, s) : null
+            })
+        }))
+    }
     Prism.hooks.add('line-range', function (env) {
         env.plugins = env.plugins || {};
         env.plugins.linerange = true;
     });
 
-
     Prism.plugins.linerange = {
         lineRange: lineRange
     }
     lineRange();
-})();
+    })();
