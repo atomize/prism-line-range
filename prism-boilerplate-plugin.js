@@ -14,19 +14,27 @@ complete element, language, grammar, code, highlightedCode
     if (typeof self === 'undefined' || !self.Prism || !self.document || !document.querySelector) {
         return;
     }
+    Prism.hooks.add('before-highlightall', function (env) {
+        console.log(env.selector);
+    });
+    Prism.hooks.add('before-sanity-check', function (env) {
+        console.log(env.element);
+    });
+    Prism.hooks.add('before-highlight', function (env) {
+        console.log(env.element);
+    });
+    /* Prism.hooks.add('wrap', function (env) {
+        console.log("Wrap ");
+    }); */
     Prism.hooks.add('before-insert', function (env) {
-        console.log("Before Insert ");
+        console.log(env.element);
+    });
+    Prism.hooks.add('after-highlight', function (env) {
+        console.log("After Highlight ");
     });
     Prism.hooks.add('complete', function (env) {
         console.log("Complete " + JSON.stringify(env.element.classList));
     });
-    Prism.hooks.add('before-sanity-check', function (env) {
-        console.log("Before sanity check " + JSON.stringify(env.element.classList));
-    });
-    Prism.hooks.add('before-highlightall', function (env) {
-        console.log("Before HighlightAll " + JSON.stringify(env));
-    });
-    Prism.hooks.add('before-highlight', function (env) {
-        console.log("Before Highlight " + JSON.stringify(env.element));
-    });
+
+
 })();

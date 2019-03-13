@@ -1,12 +1,14 @@
 (function () {
-    if (typeof self === 'undefined' || !self.Prism || !self.document || !document.querySelector) {
+    if (typeof self === 'undefined' || !self.Prism || !self.document || !document.querySelector || !window.fetch) {
+
         return;
     }
-    Prism.hooks.add('complete', function (env) {
-        console.log("Hello Prism");
-    });
-
-
+    if (!window.fetch) {
+        !function(e,n){"object"==typeof exports&&"undefined"!=typeof module?module.exports=n():"function"==typeof define&&define.amd?define(n):e.unfetch=n()}(this,function(){function e(e,n){return n=n||{},new Promise(function(t,r){function o(e){for(var n,t,r,s=e.getAllResponseHeaders(),u=[],i=[],f={},c=/^\s*(.*?)\s*\:\s*([\s\S]*?)\s*$/gm;n=c.exec(s);)u.push(r=n[1].toLowerCase()),i.push([r,n[2]]),t=f[r],f[r]=t?t+","+n[2]:n[2];return{type:"cors",ok:e.status/200|!1,status:e.status,statusText:e.statusText,url:e.responseURL,clone:function(){return o(e)},text:function(){return Promise.resolve(e.responseText)},json:function(){return Promise.resolve(e.responseText).then(JSON.parse)},xml:function(){return Promise.resolve(e.responseXML)},blob:function(){return Promise.resolve(e.response)},headers:{keys:function(){return u},entries:function(){return i},get:function(e){return f[e.toLowerCase()]},has:function(e){return e.toLowerCase()in f}}}}var s=new XMLHttpRequest;s.open(n.method||"get",e);for(var u in n.headers)s.setRequestHeader(u,n.headers[u]);s.onload=function(){t(o(s))},s.onerror=function(){r(Error("Network Error"))},s.send(n.body||null)})}return e});
+    }
+    if (!Array.prototype.filter){
+        if(!Array.prototype.filter){Array.prototype.filter=function(i,r){"use strict";if(!((typeof i==="Function"||typeof i==="function")&&this))throw new TypeError;var t=this.length>>>0,e=new Array(t),n=this,f=0,h=-1;if(r===undefined){while(++h!==t){if(h in this){if(i(n[h],h,n)){e[f++]=n[h]}}}}else{while(++h!==t){if(h in this){if(i.call(r,n[h],h,n)){e[f++]=n[h]}}}}e.length=f;return e}}
+    }
     function fetchText(url) {
         const response = fetch(url).then(response => {
             return response.text()
@@ -17,45 +19,47 @@
     function init(sourceURL) {
         return fetchText(sourceURL).then(
             x => {
-
                 return [sourceURL, x.split('\n')]
             }
         )
     }
-
-
-    function cb() {
-        return console.log("Called back")
-    }
-
-
-
-
+function makething(pre,s) {
+    var lineRange = pre.getAttribute("data-range")
+    var lines = lineRange.split(',')
+    lines = lines.filter(x => isNaN(x) === false)
+    var startLine = parseInt(lines[0], 10)
+    var endLine = lines[1] === undefined ? -1 : parseInt(lines[1], 10)
+    var codeRange = s[1].slice(startLine - 1, endLine).join('\n')
+    var codeRangeEl = `<code class="line-numbers lang-js">${codeRange.trim()}</code>`
+    pre.setAttribute('data-start', (parseInt(lines[0], 10)))
+    pre.innerHTML = codeRangeEl
+    Prism.highlightAllUnder(pre)
+}
     function lineRange() {
 
         let allEls = Array.prototype.slice.apply(document.querySelectorAll("pre[data-tutorial]"))
-        allEls = allEls.map(datatt => datatt.getAttribute('data-tutorial'))
-        var filteredEls = allEls.filter((el, pos) => {
-            return allEls.indexOf(el) == pos
-        })
-
+        let allEls1 = allEls.map(datatt => datatt.getAttribute('data-tutorial'))
+        var filteredEls = allEls1.filter((el, pos) => {return allEls1.indexOf(el) == pos})
         filteredEls.map(source => init(source).then(s => {
-            document.querySelectorAll('[data-tutorial*="' + s[0] + '"]')
-                .forEach(function (pre) {
-                    var lineRange = pre.getAttribute("data-range")
-                    var lines = lineRange.split(',')
-                    lines = lines.filter(x => isNaN(x) === false)
-                    var startLine = parseInt(lines[0], 10)
-                    var endLine = lines[1] === undefined ? -1 : parseInt(lines[1], 10)
-                    var codeRange = s[1].slice(startLine - 1, endLine).join('\n')
-                    var codeRangeEl = `<code class="line-numbers">${codeRange.trim()}</code>`
-                    pre.setAttribute('data-start', (parseInt(lines[0], 10)))
-                    pre.innerHTML = codeRangeEl
-                    Prism.highlightAllUnder(pre, false, cb)
-                })
+            var subSelectors = Array.prototype.slice.apply(document.querySelectorAll('[data-tutorial*="' + s[0] + '"]'))
+            console.log(allEls.map(datatt => { 
+                datatt.getAttribute('data-tutorial')===s[0]?makething(datatt,s):null
+            }))
+            /* subSelectors.map(function (pre) {
+                var lineRange = pre.getAttribute("data-range")
+                var lines = lineRange.split(',')
+                lines = lines.filter(x => isNaN(x) === false)
+                var startLine = parseInt(lines[0], 10)
+                var endLine = lines[1] === undefined ? -1 : parseInt(lines[1], 10)
+                var codeRange = s[1].slice(startLine - 1, endLine).join('\n')
+                var codeRangeEl = `<code class="line-numbers lang-js">${codeRange.trim()}</code>`
+                pre.setAttribute('data-start', (parseInt(lines[0], 10)))
+                pre.innerHTML = codeRangeEl
+                Prism.highlightAllUnder(pre)
+            }) */
         }))
+        
     }
-    //goTut()
 
     Prism.hooks.add('line-range', function (env) {
         env.plugins = env.plugins || {};
@@ -68,4 +72,3 @@
     }
     lineRange();
 })();
-//goTut()
