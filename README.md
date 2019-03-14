@@ -1,5 +1,5 @@
 # Fetch Line Range
-## A plugin for [Prism.js](https://prismjs.com) -  [:octocat:](https://github.com/LeaVerou/prism/)
+## A plugin for [Prism.js](https://prismjs.com) -  [:octocat:](https://github.com/PrismJS/prism)
 ### Efficiently display a range of line numbers from a fetched source file
 
 # How to use
