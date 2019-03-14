@@ -4,7 +4,7 @@
 # How to use
 
 Include prism-line-range.js in your markup after you call prism.js
-```
+```html
 <script src="js/prism.js"></script>
 <script src="../prism-line-range.min.js"></script>
 ```
@@ -13,11 +13,11 @@ Adding a ```data-fetch``` and ```data-range``` attribute to an empty ```<pre>```
 
 
 The first block would display the first 5 lines.
-```
+```html
 <pre data-fetch="../prism-line-range.js" data-range="1,5" class="language-js line-numbers"></pre>
 ```
 The second block would be lines 6-10
-```
+```html 
 <pre data-fetch="../prism-line-range.js" data-range="6,10" class="language-js line-numbers"></pre>
 ```
 
