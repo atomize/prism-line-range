@@ -2,7 +2,7 @@
     if (typeof self === 'undefined' || !self.Prism || !self.document || !document.querySelector) {
         return;
     }
-    
+
     /**
      * Fetches the file from a local or remote URL string and returns text
      * @param  {string} url - The url or file path of the source code to fetch
@@ -28,29 +28,29 @@
     }
 
     /**
-     * Takes a PRE element, figures out what file it is associated with, get the desired line range, and splits the source text and injects it highlighted
+     * Takes a PRE element, figures out what file it is associated with, gets the desired line range, splits the source text and injects it highlighted
      * @param  {DOM element} pre - A DOM element, in this case will be a <pre>
      * @param  {array} s - An array with the source code file name and the source code contents as text (from init())
      */
     function splitLines(pre, s) {
-        var lineRange = pre.getAttribute("data-range")
+        var lineRange = pre.getAttribute('data-range')
         var rawLines = lineRange.split(',')
         var lines = rawLines.filter(x => isNaN(x) === false)
         var startLine = parseInt(lines[0], 10)
         var endLine = lines[1] === undefined ? -1 : parseInt(lines[1], 10)
         var codeRange = s[1].slice(startLine - 1, endLine).join('\n')
-        var codeRangeEl = '<code class="line-numbers lang-js">' + codeRange.trim() + '</code>'
-        !pre.getAttribute("data-start") ? pre.setAttribute('data-start', startLine) : null
+        var codeRangeEl = '<code class="line-numbers">' + codeRange.trim() + '</code>'
+        !pre.getAttribute('data-start') ? pre.setAttribute('data-start', startLine) : null
         pre.innerHTML = codeRangeEl
         Prism.highlightAllUnder(pre)
     }
     
     /**
-     * This is the only function that needs to be run by Prism. It get the appropriate elements from the DOM
+     * This is the only function that needs to be run by Prism. It gets the appropriate elements from the DOM
      * figures out the unique list of files to be fetched, and sends them to be fetched and cached, each only once.
      */
     function lineRange() {
-        var tutorialElements = Array.prototype.slice.apply(document.querySelectorAll("pre[data-fetch]"))
+        var tutorialElements = Array.prototype.slice.apply(document.querySelectorAll('pre[data-fetch]'))
         var fileArray = tutorialElements.map(el => el.getAttribute('data-fetch'))
         var filteredFileArray = fileArray.filter((el, pos) => {
             return fileArray.indexOf(el) == pos
