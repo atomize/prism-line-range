@@ -1,5 +1,5 @@
 # Fetch Line Range
-### Efficiently display a range of line numbers from a fetch source file
+### Efficiently display a range of line numbers from a fetched source file
 
 # How to use
 
