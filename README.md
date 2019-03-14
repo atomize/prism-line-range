@@ -1,7 +1,7 @@
 # Fetch Line Range
 ## A plugin for [Prism.js](https://prismjs.com) -  [:octocat:](https://github.com/PrismJS/prism)
 ### Efficiently display a range of line numbers from a fetched source file
-
+#### [See an example here. Source for this example in the docs/ folder] (https://atomize.github.io/prism-line-range/docs/)
 # How to use
 
 Include prism-line-range.js in your markup after you call prism.js
