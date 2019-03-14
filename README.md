@@ -24,3 +24,6 @@ The second block would be lines 6-10
 
 ## Line Numbers plugin support
 Fetch Line Range automatically inserts the correct ```data-start``` parameter for use with the Line Numbers plugin. This way, the line numbers displayed will correspond correctly with the code file that was fetched. you can override this functionality by setting the ```data-start``` attribute on your ```<pre>``` element manually, and Fetch Line Range will use it instead of injecting a value.
+
+## Caveats
+**Whitespace Normalization**: If you are using the Whitespace Normalization plugin with Prism, *leading* and *trailing* empty lines are stripped even if included ```data-range``` attribute. This does not affect the line numbering.

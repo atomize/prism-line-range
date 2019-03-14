@@ -20,7 +20,7 @@
 <body>
   <div id="wrapper">
     <h3>Fetch-Line-Range is a plugin for Prism.js</h3>
-    <p>It allows you to easily define a source code file and a line range to display, and it will automatically retrieve the file and display the specificed range.
+    <p>It allows you to easily define a source code file and a line range to display, and it will automatically retrieve the file and display the specified range.
       For example, the highlighted block below is the first 5 lines of this plugins source, 
       which was fetched locally, and displayed using the markup:
       <p><code class="language-html"><<!---->pre data-fetch="../prism-line-range.js" data-range="1,5" class="language-js line-numbers"></pre></code> results in:</p>
@@ -32,7 +32,7 @@
       requests, and so can load external source files as long as the request destination is CORS enabled. Here is the rest of the plugins code:
     </p>
     <pre data-fetch="../prism-line-range.js" data-range="6,18" class="language-js line-numbers"></pre>
-    <p>The splitLines() function does the work of reading the data range and retriving the codechunk from cache.
+    <p>The splitLines() function does the work of reading the data range and retrieving the codechunk from cache.
       Then it inserts it in to the proper place and highlights it. If you are using the line numbers plugin
       with Prism, it will appropriately adjust the data-start value so that your line numbers display properly.
     </p>
