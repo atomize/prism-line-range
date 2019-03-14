@@ -1,5 +1,5 @@
 # Fetch Line Range
-## A plugin for [Prism.js](https://prismjs.com) [:octocat:](https://github.com/LeaVerou/prism/)
+## A plugin for [Prism.js](https://prismjs.com) -  [:octocat:](https://github.com/LeaVerou/prism/)
 ### Efficiently display a range of line numbers from a fetched source file
 
 # How to use
@@ -27,3 +27,5 @@ Fetch Line Range automatically inserts the correct ```data-start``` parameter fo
 
 ## Caveats
 **Whitespace Normalization**: If you are using the Whitespace Normalization plugin with Prism, *leading* and *trailing* empty lines are stripped even if included ```data-range``` attribute. This does not affect the line numbering.
+
+**fetch() and Promise**: Under the hood, Fetch Line Range uses ```fetch()``` and ```Promise``` which are (wtf let's get a move on =) not supported by all browser environments. For these cases there is a minified version with Promises and fetch() polyfilled in the smallest manner I could find. The resulting polyfilled plugin is a whopping 10.8kb, compared to without the polyfills of ~1.6kb.
