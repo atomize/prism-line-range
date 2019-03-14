@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAOCAQAAACMJlQBAAAAmElEQVR4AYXKJVQDYACF0R+noQ2N9LOO9bOO9kTHnV7RuJ5ouBbcNS4u4lyc4dwXvxc+ExUJv5Pt3HL4nTZQ/1sudwHicn8+xLwZ+inXSrpR8TWn2/bR5NdDi6+iH3OhhK+OZScPI37S9pYjWNVmVZd9cev2Pe1CcXhiGYtGzOszbd2Ec9umEXvKzeAGNy5cIOEGF6Aq/OcBBWbQQj9jcgUAAAAASUVORK5CYII=">
+  <title>Prism.js Line-Range Plugin Example</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preload" as="style" href="css/main.css" />
+  <link rel="preload" as="style" href="css/prism-monokai.min.css" />
+  <link rel="preload" as="style" href="css/prism-line-numbers.css" />
+  <link rel="preload" as="script" href="js/prism.js" />
+  <link rel="preload" as="script" href="../prism-line-range.min.js" />
+  <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
+  <link rel="stylesheet" type="text/css" media="screen" href="css/prism-monokai.min.css" />
+  <link rel="stylesheet" type="text/css" media="screen" href="css/prism-line-numbers.css" />
+</head>
+
+<body>
+  <div id="wrapper">
+    <h3>Fetch-Line-Range is a plugin for Prism.js</h3>
+    <p>It allows you to easily define a source code file and a line range to display, and it will automatically retrieve the file and display the specificed range.
+      For example, the highlighted block below is the first 5 lines of this plugins source, 
+      which was fetched locally, and displayed using the markup:
+      <p><code class="language-html"><<!---->pre data-fetch="../prism-line-range.js" data-range="1,5" class="language-js line-numbers"></pre></code> results in:</p>
+    </p>
+    <pre data-fetch="../prism-line-range.js" data-range="1,5" class="language-js line-numbers"></pre>
+    <p>This makes it much easier to do with Prism what many of us use it for: breaking down code files in to logical chunks for explanation.
+      Fetch-Line-Range also requests each file only once, and uses cache to provide the information to the markup rather than 
+      making a request each time the file is used. This minimizes network requests. Fetch-Line-Range uses the <code class="language-js">fetch()</code> method to make
+      requests, and so can load external source files as long as the request destination is CORS enabled. Here is the rest of the plugins code:
+    </p>
+    <pre data-fetch="../prism-line-range.js" data-range="6,18" class="language-js line-numbers"></pre>
+    <p>The splitLines() function does the work of reading the data range and retriving the codechunk from cache.
+      Then it inserts it in to the proper place and highlights it. If you are using the line numbers plugin
+      with Prism, it will appropriately adjust the data-start value so that your line numbers display properly.
+    </p>
+    <pre data-fetch="../prism-line-range.js" data-range="19,30" class="language-js line-numbers"></pre>
+    <p>lineRange() is where the magic happens. It grabs all the pre elements with a data-fetch property,
+      creates a list of unique source files used, sends them to the init() function to be fetched and cached to be used by splitLines().
+    </p>
+    <pre data-fetch="../prism-line-range.js" data-range="31,42" class="language-css line-numbers"></pre>
+    <p>Here are the hooks to register with Prism as a plugin, and also the execution of the main function once Prism has loaded</p>
+    <pre data-fetch="../prism-line-range.js" data-range="43,52" class="language-css line-numbers"></pre>
+    <p>Here is the CSS file used to center my codechunks, broken in two parts just for demonstrating a bit further:</p>
+    <pre data-fetch="css/main.css" data-range="1,13" class="language-css line-numbers"></pre>
+    <p>The second chunk!</p>
+    <pre data-fetch="css/main.css" data-range="14,999" class="language-css line-numbers"></pre>
+  </div>
+</body>
+
+<script src="js/prism.js"></script>
+<script src="../prism-line-range.min.js"></script>
+</html>
