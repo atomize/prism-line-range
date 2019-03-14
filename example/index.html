@@ -26,7 +26,8 @@
       <p><code class="language-html"><<!---->pre data-fetch="../prism-line-range.js" data-range="1,5" class="language-js line-numbers"></pre></code> results in:</p>
     </p>
     <pre data-fetch="../prism-line-range.js" data-range="1,5" class="language-js line-numbers"></pre>
-    <p>This makes it much easier to do with Prism what many of us use it for: breaking down code files in to logical chunks for explanation.
+    <p>Hey! What happened to line 5 as specified in the markup? Well, as also shown below, leading and trailing blank lines that end up in codechunks are stripped. This does not affect the line numbering.</p>
+    <p> This makes it much easier to do with Prism what many of us use it for: breaking down code files in to logical chunks for explanation.
       Fetch-Line-Range also requests each file only once, and uses cache to provide the information to the markup rather than 
       making a request each time the file is used. This minimizes network requests. Fetch-Line-Range uses the <code class="language-js">fetch()</code> method to make
       requests, and so can load external source files as long as the request destination is CORS enabled. Here is the rest of the plugins code:
@@ -45,7 +46,7 @@
     <pre data-fetch="../prism-line-range.js" data-range="43,52" class="language-css line-numbers"></pre>
     <p>Here is the CSS file used to center my codechunks, broken in two parts just for demonstrating a bit further:</p>
     <pre data-fetch="css/main.css" data-range="1,13" class="language-css line-numbers"></pre>
-    <p>The second chunk!</p>
+    <p>The second chunk! Notice line 13 got skipped. That is because it is blank and was a leading line in the codechunk, so the Normalize Whitespace plugin baked in to the Prism.js source that this demo is using affected it.</p>
     <pre data-fetch="css/main.css" data-range="14,999" class="language-css line-numbers"></pre>
   </div>
 </body>
