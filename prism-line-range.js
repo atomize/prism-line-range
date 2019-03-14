@@ -24,7 +24,7 @@
         var endLine = lines[1] === undefined ? -1 : parseInt(lines[1], 10)
         var codeRange = s[1].slice(startLine - 1, endLine).join('\n')
         var codeRangeEl = '<code class="line-numbers lang-js">'+codeRange.trim()+'</code>'
-        pre.setAttribute('data-start', startLine)
+        !pre.getAttribute("data-start") ? pre.setAttribute('data-start', startLine): null
         pre.innerHTML = codeRangeEl
         Prism.highlightAllUnder(pre)
     }
