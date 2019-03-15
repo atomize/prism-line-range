@@ -29,7 +29,7 @@
 
     /**
      * Takes a PRE element, figures out what file it is associated with, gets the desired line range, splits the source text and injects it highlighted
-     * @param  {DOM element} pre - A DOM element, in this case will be a <pre>
+     * @param  {DOM element} pre - A DOM element, in this case will be a pre
      * @param  {array} s - An array with the source code file name and the source code contents as text (from init())
      */
     function splitLines(pre, s) {
